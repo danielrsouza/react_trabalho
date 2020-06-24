@@ -5,14 +5,14 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { getToken } from '../../auth';
 
-function Contato(){
-
+function Cliente()
+{
     const { handleSubmit, register} = useForm();
-    const [contatos, setContatos] = useState([]);
+    const [clientes, setClientes] = useState([]);
     const history = useHistory();
 
     useEffect(() => {
-        axios.get(`https://vinicius.pro.br/daoo/rest2/index.php/contacts`, 
+        axios.get(`https://vinicius.pro.br/daoo/rest2/index.php/clients`, 
             {
                 headers: {
                     Authorization: "Bearer " + getToken()
@@ -21,7 +21,7 @@ function Contato(){
         )
         .then(res => {
             const dados = res.data
-            setContatos(dados);
+            setClientes(dados);
 
             console.log(dados);
         })        
@@ -33,11 +33,12 @@ function Contato(){
         });
     }, [])
 
+    // UPDATE
     const onSubmit = (dados, event) => {
 
         event.preventDefault();
 
-        const url = `https://vinicius.pro.br/daoo/rest2/index.php/contacts`;
+        const url = `https://vinicius.pro.br/daoo/rest2/index.php/clients`;
         let dadosJson = JSON.stringify(dados);
 
         axios.post(url, dadosJson)
@@ -54,12 +55,11 @@ function Contato(){
     } 
 
     const handleClickResponse = (id) =>{
-        console.log("aqui!")
-        history.push(`/contacts/response/${id}`)
+        history.push(`/clients/response/${id}`)
     }
 
     const handleClickDelete = (id) => {
-        axios.post(`https://vinicius.pro.br/daoo/rest2/index.php/contacts/delete/${id}`, 
+        axios.post(`https://vinicius.pro.br/daoo/rest2/index.php/clients/delete/${id}`, 
             {
                 headers: {
                     Authorization: "Bearer " + getToken()
@@ -82,7 +82,7 @@ function Contato(){
         <div className="row">
             <div className="col-sm-1"></div>
             <div className="col-sm-10">
-                <h1>Contato</h1>
+                <h1>Clientes</h1>
             </div>
             <div className="col-sm-1"></div> 
 
@@ -93,12 +93,16 @@ function Contato(){
                     <input type="text" className="form-control" id="name" placeholder="nome" name="name" ref={register} />
                 </div>
                 <div className="form-group">
+                    <label htmlFor="telefone">Telefone</label>
+                    <input type="number" className="form-control" id="telefone" placeholder="telefone" name="phone" ref={register} />
+                </div>
+                <div className="form-group">
                     <label htmlFor="email">Email</label>
                     <input type="email" className="form-control" id="email" placeholder="email" name="email" ref={register} />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="mensagem">Mensagem</label>
-                    <input type="text" className="form-control" id="message" placeholder="mensagem" name="message" ref={register} />
+                    <label htmlFor="mensagem">address</label>
+                    <input type="text" className="form-control" id="message" placeholder="mensagem" name="address" ref={register} />
                 </div>
                 <button type="submit" className="btn btn-primary mb-2">Enviar</button>
             </form>
@@ -108,29 +112,27 @@ function Contato(){
                     <tr>
                     <th>ID</th>
                     <th>Nome</th>
+                    <th>Telefone</th>
                     <th>Email</th>
-                    <th>Menssagem</th>
-                    <th>status</th>
-                    <th>description</th>
+                    <th>Address</th>
                     <th colSpan='2'>Ações</th>
                     </tr>
                 </thead>
             
             <tbody>
-                {contatos.map( (dados, index) =>{
+                {clientes.map( (dados, index) =>{
                     return(
                     <tr key={index}>
-                        <td>{dados.idContact}</td>
+                        <td>{dados.idClient}</td>
                         <td>{dados.name}</td>
+                        <td>{dados.phone}</td>
                         <td>{dados.email}</td>
-                        <td>{dados.message}</td>
-                        <td>{dados.status}</td>
-                        <td>{dados.description}</td>
+                        <td>{dados.address}</td>
                         <td>
-                            <button type="button" className="btn btn-primary" onClick={() => handleClickResponse(dados.idContact)}>Responder</button>
+                            <button type="button" className="btn btn-primary" onClick={() => handleClickResponse(dados.idClient)}>Responder</button>
                         </td>
                         <td>
-                            <button type="button" className="btn btn-danger" onClick={() => handleClickDelete(dados.idContact)}>Excluir</button>
+                            <button type="button" className="btn btn-danger" onClick={() => handleClickDelete(dados.idClient)}>Excluir</button>
                         </td>
                     </tr>
                     )
@@ -140,7 +142,7 @@ function Contato(){
             </div>
         </div>
         
-    );
+    );   
 }
 
-export default Contato
+export default Cliente

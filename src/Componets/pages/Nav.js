@@ -33,6 +33,10 @@ function Nav() {
                             <Link className="nav-link" to="/contatos">Contatos</Link>
                         </li>
                         <li className="nav-item">
+                            <Link className="nav-link" to="/clientes">Clientes</Link>
+                        </li>
+                        
+                        <li className="nav-item" style={{marginLeft: '900px'}}>
                             <Link className="nav-link" onClick={logout} to="/">Logout</Link>
                         </li>
                     </>
@@ -40,6 +44,8 @@ function Nav() {
                     <li className="nav-item">
                         <Link className="nav-link" to="/login">Login</Link>
                     </li>
+
+                    
                }
 
            </ul>

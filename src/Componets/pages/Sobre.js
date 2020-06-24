@@ -20,8 +20,8 @@ function Sobre()
 
     return(
         <div className="jumbotron">
-            <h1 className="display-4">{page}</h1>
-            <p className="lead">{content}</p>
+            <h1 className="display-4"dangerouslySetInnerHTML={{ __html: page }}></h1>
+            <p className="lead" dangerouslySetInnerHTML={{ __html: content }}></p>
         </div>
     ) 
 }

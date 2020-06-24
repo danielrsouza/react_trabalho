@@ -10,6 +10,8 @@ import Produtos from './Componets/pages/Produtos';
 import Contato from './Componets/pages/Contato';
 import Login from './Componets/admin/Login';
 import ContatoView from './Componets/admin/ContatoView';
+import ClientesView from './Componets/admin/ClientesView';
+import Cliente from './Componets/pages/Clientes';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -43,11 +45,11 @@ function App() {
             <Login />
           </Route>
 
-          
+
             <PrivateRoute exact path="/contatos" component={Contato} />
-
-
             <PrivateRoute path="/contacts/response/:id" component={ContatoView}/>
+            <PrivateRoute path="/clients/response/:id" component={ClientesView}/>
+            <PrivateRoute exact path="/clientes" component={Cliente} />
 
         </Switch>
       </Router>

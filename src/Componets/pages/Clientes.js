@@ -39,9 +39,19 @@ function Cliente()
         event.preventDefault();
 
         const url = `https://vinicius.pro.br/daoo/rest2/index.php/clients`;
-        let dadosJson = JSON.stringify(dados);
 
-        axios.post(url, dadosJson)
+        axios.post(url, 
+        {
+            name: dados.name,
+            phone: dados.phone,
+            email: dados.email,
+            address: dados.address,
+        },
+        {
+            headers: {
+                Authorization: "Bearer " + getToken()
+            }
+        })
             .then(res => {
                 console.log(res);
             })     
@@ -60,11 +70,17 @@ function Cliente()
 
     const handleClickDelete = (id) => {
         axios.post(`https://vinicius.pro.br/daoo/rest2/index.php/clients/delete/${id}`, 
-            {
-                headers: {
-                    Authorization: "Bearer " + getToken()
+            
+                {
+
+                },
+                {
+                    headers: {
+                        Authorization: "Bearer " + getToken()
+                    }
                 }
-            }
+
+            
         )
         .then(res => {
             console.log(res)

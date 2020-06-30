@@ -36,14 +36,19 @@ function ClientesView(){
         //Api.put(`/contact/${contact.idContact}`)
         axios.post(`https://vinicius.pro.br/daoo/rest2/index.php/clients/update/${id}`,
             {
-                status: data.status,
-                description: data.description,
-
+                name: data.name,
+                phone: data.phone,
+                email: data.email,
+                address: data.address
+            
+            },
+            {
                 headers: {
                     Authorization: "Bearer " + getToken(),
 
                 }
-        }).then( (response) =>{
+            }
+        ).then( (response) =>{
 
             setClientes(response.data)
             console.log(id)
@@ -59,7 +64,7 @@ function ClientesView(){
 
     return(
         <>
-            <h1>Retorno de Contatos</h1>
+            <h1>Retorno de Clientes</h1>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <table className="table table-striped">
                     <thead></thead>
@@ -70,15 +75,19 @@ function ClientesView(){
                         </tr>
                         <tr>
                             <th>Nome</th>
-                            <td><input name="description" ref={register} className="form-control" defaultValue={clientes.name}/></td>
+                            <td><input name="name" ref={register} className="form-control" defaultValue={clientes.name}/></td>
                         </tr>
                         <tr>
                             <th>Telefone</th>
-                            <td><input name="description" ref={register} className="form-control" defaultValue={clientes.phone}/></td>
+                            <td><input name="phone" ref={register} className="form-control" defaultValue={clientes.phone}/></td>
                         </tr>
                         <tr>
                             <th>Endereço</th>
-                            <td><input name="description" ref={register} className="form-control" defaultValue={clientes.address}/></td>
+                            <td><input name="address" ref={register} className="form-control" defaultValue={clientes.address}/></td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td><input name="email" ref={register} className="form-control" defaultValue={clientes.email}/></td>
                         </tr>
         
                     </tbody>

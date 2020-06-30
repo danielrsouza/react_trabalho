@@ -37,9 +37,12 @@ function ContatoView(){
     const onSubmit = (data) =>{
         //Api.put(`/contact/${contact.idContact}`)
         axios.post(`https://vinicius.pro.br/daoo/rest2/index.php/contacts/update/${id}`,
-            {
+            
+                {
                 status: data.status,
                 description: data.description,
+                },
+                {
 
                 headers: {
                     Authorization: "Bearer " + getToken(),

@@ -38,9 +38,19 @@ function Contato(){
         event.preventDefault();
 
         const url = `https://vinicius.pro.br/daoo/rest2/index.php/contacts`;
-        let dadosJson = JSON.stringify(dados);
 
-        axios.post(url, dadosJson)
+        console.log("DADOS", dados)
+        axios.post(url, 
+            {
+                name: dados.name,
+                description: dados.description,
+                email: dados.email
+            },
+            {
+                headers: {
+                    Authorization: "Bearer " + getToken()
+                }
+            })
             .then(res => {
                 console.log(res);
             })     
@@ -60,6 +70,8 @@ function Contato(){
 
     const handleClickDelete = (id) => {
         axios.post(`https://vinicius.pro.br/daoo/rest2/index.php/contacts/delete/${id}`, 
+            {
+            },
             {
                 headers: {
                     Authorization: "Bearer " + getToken()

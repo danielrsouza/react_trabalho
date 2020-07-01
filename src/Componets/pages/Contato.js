@@ -40,26 +40,54 @@ function Contato(){
         const url = `https://vinicius.pro.br/daoo/rest2/index.php/contacts`;
 
         console.log("DADOS", dados)
-        axios.post(url, 
-            {
-                name: dados.name,
-                description: dados.description,
-                email: dados.email
-            },
-            {
-                headers: {
-                    Authorization: "Bearer " + getToken()
-                }
-            })
-            .then(res => {
-                console.log(res);
-            })     
-               .catch(function (error) {
-                console.log(error);
-            })
-            .finally(function () {
-    
-            });
+
+        console.log(dados.filtro)
+
+        if (dados.filtro) {
+
+            let teste = dados.filtro
+            axios.get(`https://vinicius.pro.br/daoo/rest2/index.php/contacts/search/${teste}`, 
+                    {
+                        params:{},
+                        headers: {
+                            Authorization: "Bearer " + getToken()
+                        }
+                    }
+                )
+                .then(res => {
+                    const dados = res.data
+                    setContatos(dados);
+
+                    console.log(dados);
+                })        
+                .catch(function (error) {
+                    console.log(error);
+                })
+                .finally(function () {
+
+                });
+        } else {
+            axios.post(url, 
+                {
+                    name: dados.name,
+                    description: dados.description,
+                    email: dados.email
+                },
+                {
+                    headers: {
+                        Authorization: "Bearer " + getToken()
+                    }
+                })
+                .then(res => {
+                    console.log(res);
+                })     
+                   .catch(function (error) {
+                    console.log(error);
+                })
+                .finally(function () {
+        
+                });
+        }
 
     } 
 
@@ -92,6 +120,8 @@ function Contato(){
 
     return(
         <div className="row">
+            
+
             <div className="col-sm-1"></div>
             <div className="col-sm-10">
                 <h1>Contato</h1>
@@ -99,6 +129,7 @@ function Contato(){
             <div className="col-sm-1"></div> 
 
             <div className="container">
+
             <form onSubmit = {handleSubmit(onSubmit)}>
                 <div className="form-group">
                     <label htmlFor="nome">Nome</label>
@@ -114,6 +145,17 @@ function Contato(){
                 </div>
                 <button type="submit" className="btn btn-primary mb-2">Enviar</button>
             </form>
+
+            <br/>
+
+
+            <form onSubmit = {handleSubmit(onSubmit)}>
+                <label>Pesquisar</label>
+            <input class="form-control" type="text" id="filtro"name="filtro" placeholder="Search" aria-label="Search" ref={register} />
+            <br/>
+            <button type="submit" class="btn btn-warning" >Pesquisar</button>
+            </form>
+            <br/>
 
             <table className="table">
                 <thead className="thead-dark">

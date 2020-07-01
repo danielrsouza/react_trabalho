@@ -40,28 +40,53 @@ function Cliente()
 
         const url = `https://vinicius.pro.br/daoo/rest2/index.php/clients`;
 
-        axios.post(url, 
-        {
-            name: dados.name,
-            phone: dados.phone,
-            email: dados.email,
-            address: dados.address,
-        },
-        {
-            headers: {
-                Authorization: "Bearer " + getToken()
-            }
-        })
-            .then(res => {
-                console.log(res);
-            })     
-               .catch(function (error) {
-                console.log(error);
-            })
-            .finally(function () {
-    
-            });
+        if (dados.filtro) {
 
+            let filtro = dados.filtro
+            axios.get(`https://vinicius.pro.br/daoo/rest2/index.php/clients/search/${filtro}`, 
+                    {
+                        params:{},
+                        headers: {
+                            Authorization: "Bearer " + getToken()
+                        }
+                    }
+                )
+                .then(res => {
+                    const dados = res.data
+                    setClientes(dados);
+
+                    console.log(dados);
+                })        
+                .catch(function (error) {
+                    console.log(error);
+                })
+                .finally(function () {
+
+                });
+        } else {
+
+            axios.post(url, 
+            {
+                name: dados.name,
+                phone: dados.phone,
+                email: dados.email,
+                address: dados.address,
+            },
+            {
+                headers: {
+                    Authorization: "Bearer " + getToken()
+                }
+            })
+                .then(res => {
+                    console.log(res);
+                })     
+                .catch(function (error) {
+                    console.log(error);
+                })
+                .finally(function () {
+        
+                });
+        }
     } 
 
     const handleClickResponse = (id) =>{
@@ -122,6 +147,15 @@ function Cliente()
                 </div>
                 <button type="submit" className="btn btn-primary mb-2">Enviar</button>
             </form>
+
+<br/>
+            <form onSubmit = {handleSubmit(onSubmit)}>
+                <label>Pesquisar</label>
+            <input class="form-control" type="text" id="filtro"name="filtro" placeholder="Search" aria-label="Search" ref={register} />
+            <br/>
+            <button type="submit" class="btn btn-warning" >Pesquisar</button>
+            </form>
+            <br/>
 
             <table className="table">
                 <thead className="thead-dark">
